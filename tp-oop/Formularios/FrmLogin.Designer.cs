@@ -27,7 +27,7 @@ namespace tp_oop.Formularios
             txtBContraseña.Location = new Point(70, 122);
             txtBContraseña.Name = "txtBContraseña";
             txtBContraseña.Size = new Size(275, 23);
-            txtBContraseña.TabIndex = 0;
+            txtBContraseña.TabIndex = 1;
             txtBContraseña.UseSystemPasswordChar = true;
             // 
             // txtBUsuario
@@ -35,7 +35,7 @@ namespace tp_oop.Formularios
             txtBUsuario.Location = new Point(70, 78);
             txtBUsuario.Name = "txtBUsuario";
             txtBUsuario.Size = new Size(275, 23);
-            txtBUsuario.TabIndex = 1;
+            txtBUsuario.TabIndex = 0;
             // 
             // btnIniciarSesion
             // 
