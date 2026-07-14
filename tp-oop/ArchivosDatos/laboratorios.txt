@@ -1,0 +1,2 @@
+1|Laboratorio A|30|true
+2|Laboratorio B|25|true
