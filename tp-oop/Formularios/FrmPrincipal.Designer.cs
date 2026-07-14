@@ -15,16 +15,17 @@ namespace tp_oop.Formularios
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // FrmPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "FrmPrincipal";
-            this.Text = "Sistema de Reservas - Principal";
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1112, 616);
+            Name = "FrmPrincipal";
+            Text = "Sistema de Reservas - Principal";
+            Load += FrmPrincipal_Load;
+            ResumeLayout(false);
         }
     }
 }

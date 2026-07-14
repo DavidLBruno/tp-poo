@@ -9,7 +9,12 @@ namespace tp_oop
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Formularios.FrmPrincipal());
+
+            using var login = new Formularios.FrmLogin();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new Formularios.FrmPrincipal());
+            }
         }
     }
 }
