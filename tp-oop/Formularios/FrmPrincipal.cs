@@ -9,6 +9,5 @@ public partial class FrmPrincipal : Form
 
     private void FrmPrincipal_Load(object sender, EventArgs e)
     {
-
     }
 }
