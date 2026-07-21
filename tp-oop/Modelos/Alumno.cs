@@ -8,4 +8,10 @@ public sealed class Alumno : Usuario
     }
 
     public override string ObtenerRol() => "Alumno";
+
+    // El alumno tiene el límite semanal más bajo.
+    public override int ObtenerLimiteReservasSemanales() => 3;
+
+    // Solo puede reservar con poca anticipación.
+    public override int ObtenerDiasAnticipacionMaxima() => 7;
 }

@@ -90,7 +90,7 @@ namespace tp_oop.Formularios
             // 
             mnuCancelarReserva.Name = "mnuCancelarReserva";
             mnuCancelarReserva.Size = new Size(170, 22);
-            mnuCancelarReserva.Text = "Cancelar reserva";
+            mnuCancelarReserva.Text = "Gestion reservas";
             // 
             // mnuAdministracion
             // 
