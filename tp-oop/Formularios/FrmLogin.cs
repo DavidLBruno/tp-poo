@@ -11,6 +11,9 @@ public partial class FrmLogin : Form
         ActualizarEstadoBoton();
     }
 
+    // Texto ingresado en el campo de usuario (lo usa Program.cs para identificar el rol).
+    public string UsuarioIngresado => txtBUsuario.Text.Trim();
+
     private void ActualizarEstadoBoton()
     {
         btnIniciarSesion.Enabled =

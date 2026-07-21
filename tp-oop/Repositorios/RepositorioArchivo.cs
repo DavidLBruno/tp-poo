@@ -1,4 +1,5 @@
 using System.Text;
+using tp_oop.Excepciones;
 
 namespace tp_oop.Repositorios;
 
@@ -8,6 +9,7 @@ public sealed class RepositorioArchivo<T> : IRepositorio<T>, IDisposable
     private readonly Func<string, T> _deserializador;
     private readonly Func<T, string> _serializador;
     private readonly Func<T, int> _selectorId;
+    private bool _liberado;
 
     public RepositorioArchivo(
         string rutaArchivo,
@@ -41,10 +43,27 @@ public sealed class RepositorioArchivo<T> : IRepositorio<T>, IDisposable
 
     public IEnumerable<T> ObtenerTodos()
     {
-        return ObtenerLineas()
-            .Where(l => !string.IsNullOrWhiteSpace(l))
-            .Select(_deserializador)
-            .ToList();
+        var resultado = new List<T>();
+        var lineas = ObtenerLineas();
+
+        for (int i = 0; i < lineas.Count; i++)
+        {
+            var linea = lineas[i];
+            if (string.IsNullOrWhiteSpace(linea))
+                continue;
+
+            try
+            {
+                resultado.Add(_deserializador(linea));
+            }
+            catch (Exception ex)
+            {
+                throw new ArchivoDatosCorruptoException(
+                    $"Línea {i + 1} inválida en '{_rutaArchivo}': \"{linea}\".", ex);
+            }
+        }
+
+        return resultado;
     }
 
     public T? ObtenerPorId(int id)
@@ -70,18 +89,54 @@ public sealed class RepositorioArchivo<T> : IRepositorio<T>, IDisposable
         GuardarLineas(elementos.Select(_serializador));
     }
 
+    // Devuelve el próximo Id disponible (útil para altas).
+    public int ProximoId()
+    {
+        var elementos = ObtenerTodos().ToList();
+        return elementos.Count == 0 ? 1 : elementos.Max(_selectorId) + 1;
+    }
+
     public void Dispose()
     {
+        Liberar();
         GC.SuppressFinalize(this);
+    }
+
+    // Destructor de respaldo por si no se llamó a Dispose.
+    ~RepositorioArchivo()
+    {
+        Liberar();
+    }
+
+    private void Liberar()
+    {
+        if (_liberado)
+            return;
+
+        // No hay handles abiertos de forma persistente (se usa File.* que abre y
+        // cierra en cada operación), pero se deja el patrón determinístico completo.
+        _liberado = true;
     }
 
     private List<string> ObtenerLineas()
     {
-        return File.ReadAllLines(_rutaArchivo, Encoding.UTF8).ToList();
+        using var lector = new StreamReader(_rutaArchivo, Encoding.UTF8);
+        var lineas = new List<string>();
+        string? linea;
+        while ((linea = lector.ReadLine()) != null)
+        {
+            lineas.Add(linea);
+        }
+
+        return lineas;
     }
 
     private void GuardarLineas(IEnumerable<string> lineas)
     {
-        File.WriteAllLines(_rutaArchivo, lineas, Encoding.UTF8);
+        using var escritor = new StreamWriter(_rutaArchivo, append: false, Encoding.UTF8);
+        foreach (var linea in lineas)
+        {
+            escritor.WriteLine(linea);
+        }
     }
 }
