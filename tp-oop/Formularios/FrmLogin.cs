@@ -34,7 +34,7 @@ public partial class FrmLogin : Form
             foreach (var linea in lineas)
             {
                 var partes = linea.Split('|');
-                if (partes.Length >= 3 && partes[2] == txtBUsuario.Text)
+                if (partes.Length >= 5 && partes[2] == txtBUsuario.Text && partes[4] == txtBContraseña.Text)
                 {
                     usuarioValido = true;
                     break;
@@ -48,7 +48,7 @@ public partial class FrmLogin : Form
             }
             else
             {
-                MessageBox.Show("Usuario incorrecto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         else
