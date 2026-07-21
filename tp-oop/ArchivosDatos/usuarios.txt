@@ -1,3 +1,4 @@
 1|Administrador General|admin@instituto.edu|Administrador
 2|Docente Ejemplo|docente@instituto.edu|Docente
 3|Alumno Ejemplo|alumno@instituto.edu|Alumno
+4|prueba|prueba@prueba.com|Alumno

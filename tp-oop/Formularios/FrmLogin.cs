@@ -5,7 +5,6 @@ public partial class FrmLogin : Form
     public FrmLogin()
     {
         InitializeComponent();
-        btnIniciarSesion.Click += btnIniciarSesion_Click;
         txtBUsuario.TextChanged += (_, _) => ActualizarEstadoBoton();
         txtBContraseña.TextChanged += (_, _) => ActualizarEstadoBoton();
 
@@ -24,7 +23,34 @@ public partial class FrmLogin : Form
         if (!btnIniciarSesion.Enabled)
             return;
 
-        DialogResult = DialogResult.OK;
-        Close();
+        string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchivosDatos", "usuarios.txt");
+        if (File.Exists(ruta))
+        {
+            var lineas = File.ReadAllLines(ruta);
+            bool usuarioValido = false;
+            foreach (var linea in lineas)
+            {
+                var partes = linea.Split('|');
+                if (partes.Length >= 3 && partes[2] == txtBUsuario.Text)
+                {
+                    usuarioValido = true;
+                    break;
+                }
+            }
+
+            if (usuarioValido)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Usuario incorrecto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        else
+        {
+            MessageBox.Show("No se encontró la base de datos de usuarios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 }
