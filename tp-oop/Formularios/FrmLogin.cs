@@ -1,3 +1,5 @@
+using tp_oop.Repositorios;
+
 namespace tp_oop.Formularios;
 
 public partial class FrmLogin : Form
@@ -11,7 +13,7 @@ public partial class FrmLogin : Form
         ActualizarEstadoBoton();
     }
 
-    // Texto ingresado en el campo de usuario (lo usa Program.cs para identificar el rol).
+    // Texto ingresado en el campo de usuario (lo usa Program.cs para identificar el usuario).
     public string UsuarioIngresado => txtBUsuario.Text.Trim();
 
     private void ActualizarEstadoBoton()
@@ -26,22 +28,15 @@ public partial class FrmLogin : Form
         if (!btnIniciarSesion.Enabled)
             return;
 
-        string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchivosDatos", "usuarios.txt");
-        if (File.Exists(ruta))
+        try
         {
-            var lineas = File.ReadAllLines(ruta);
-            bool usuarioValido = false;
-            foreach (var linea in lineas)
-            {
-                var partes = linea.Split('|');
-                if (partes.Length >= 5 && partes[2] == txtBUsuario.Text && partes[4] == txtBContraseña.Text)
-                {
-                    usuarioValido = true;
-                    break;
-                }
-            }
+            using var repoUsuarios = RepositorioFactory.CrearRepositorioUsuarios();
+            var usuarios = repoUsuarios.ObtenerTodos();
+            var usuario = usuarios.FirstOrDefault(u =>
+                string.Equals(u.Email, txtBUsuario.Text.Trim(), StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(u.Nombre, txtBUsuario.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
-            if (usuarioValido)
+            if (usuario != null)
             {
                 DialogResult = DialogResult.OK;
                 Close();
@@ -51,9 +46,9 @@ public partial class FrmLogin : Form
                 MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        else
+        catch (Exception ex)
         {
-            MessageBox.Show("No se encontró la base de datos de usuarios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Error al validar credenciales: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

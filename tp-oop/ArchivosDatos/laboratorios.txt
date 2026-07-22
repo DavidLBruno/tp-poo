@@ -1,3 +1,6 @@
-1|Laboratorio A|Planta baja - Ala Norte|30|30 PCs, proyector, aire acondicionado|true
-2|Laboratorio B|Primer piso - Ala Sur|25|25 PCs, pizarra digital|true
-3|Laboratorio C|Segundo piso|20|20 PCs, sin proyector|false
+1|Laboratorio A - Programación|Planta baja - Ala Norte|30|30 PCs i7, proyector 4K, aire acondicionado|true
+2|Laboratorio B - Redes y Hardware|Primer piso - Ala Sur|25|25 PCs i5, racks de networking, Cisco switches|true
+3|Laboratorio C - Sistemas Operativos|Segundo piso - Ala Este|20|20 PCs Dual Boot Linux/Win, pizarra digital|true
+4|Laboratorio D - Inteligencia Artificial|Tercer piso - Edificio Anexo|35|35 PCs con GPUs NVIDIA RTX, pantalla gigante|true
+5|Laboratorio E - Diseño Multimedia|Planta baja - Ala Oeste|18|18 Macs M2, tabletas digitalizadoras Wacom|true
+6|Laboratorio F - Mantenimiento|Subsuelo|15|15 PCs de prueba, equipamiento en reparación|false

@@ -32,6 +32,10 @@ public partial class FrmPrincipal : Form
         mnuGestionLaboratorios.Click += mnuGestionLaboratorios_Click;
         mnuGestionUsuarios.Click += mnuGestionUsuarios_Click;
 
+        // Reportes
+        mnuReportes.Click += mnuReportes_Click;
+        mnuCerrarSesion.Click += (_, _) => Close();
+
         // Filtros
         btnActualizar.Click += (_, _) => RefrescarGrilla();
         cboLaboratorio.SelectedIndexChanged += (_, _) => RefrescarGrilla();
@@ -148,6 +152,12 @@ public partial class FrmPrincipal : Form
     private void mnuGestionUsuarios_Click(object? sender, EventArgs e)
     {
         using var frm = new FrmGestionUsuarios();
+        frm.ShowDialog(this);
+    }
+
+    private void mnuReportes_Click(object? sender, EventArgs e)
+    {
+        using var frm = new FrmReportes();
         frm.ShowDialog(this);
     }
 }
